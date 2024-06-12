@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: movies
+
+rest:
+  movies:
+    url-base: https://directa24-movies.wiremockapi.cloud/api
+    uri: /movies/search
+
+logging:
+  level:
+    org.apache.hc.client5.http: DEBUG
+    root: INFO
+    "[org.springframework.web]": DEBUG
+    "[com.ppalma.movies]": DEBUG
