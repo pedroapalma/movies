@@ -8,23 +8,23 @@ To access the collection of users perform HTTP GET request to: https://directa24
 
 For example, GET request to: https://directa24-movies.wiremockapi.cloud/api/movies/search?page=2 will return the second page of the collection of movies. Pages are numbered from 1, so in order to access the first page, you need to ask for page number 1. The response to such request is a JSON with the following 5 fields:
 
-* page: The current page of the results
-* per_page: The maximum number of movies returned per page.
-* total: The total number of movies on all pages of the result.
-* total_pages: The total number of pages with results.
-* data: An array of objects containing movies returned on the requested page
+* **page:** The current page of the results
+* **per_page:** The maximum number of movies returned per page.
+* **total:** The total number of movies on all pages of the result.
+* **total_pages:** The total number of pages with results.
+* **data:** An array of objects containing movies returned on the requested page
 
 Each movie record has the following schema:
 
-* Title: title of the movie
-* Year: year the movie was released
-* Rated: movie rating
-* Released: movie release date
-* Runtime: movie duration time in minutes
-* Genre: move genre
-* Director: movie director
-* Writer: movie writers
-* Actors: movie actors
+* **Title:** title of the movie
+* **Year:** year the movie was released
+* **Rated:** movie rating
+* **Released:** movie release date
+* **Runtime:** movie duration time in minutes
+* **Genre:** move genre
+* **Director:** movie director
+* **Writer:** movie writers
+* **Actors:** movie actors
 
 # Technologies Used
 
