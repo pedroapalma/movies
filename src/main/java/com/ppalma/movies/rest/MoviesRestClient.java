@@ -22,13 +22,13 @@ public class MoviesRestClient {
     this.restClient = restClient;
   }
 
-  public MoviesPagedEntity findMovies(int page) {
+  public MoviesPagedEntity findMoviesByPage(int page) {
     return this.restClient.get()
         .uri(uriBuilder -> uriBuilder
             .path(this.moviesUri)
             .queryParam("page", page)
             .build())
-        .accept(MediaType.ALL)
+        .accept(MediaType.APPLICATION_JSON)
         .retrieve()
         .onStatus(HttpStatusCode::isError, (request, response) -> {
           throw new InternalServerException(

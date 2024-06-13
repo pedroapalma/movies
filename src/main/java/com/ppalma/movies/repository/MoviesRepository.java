@@ -13,8 +13,8 @@ public class MoviesRepository {
 
   private final MoviesRestClient moviesRestClient;
 
-  public Optional<MoviesPaged> getPagedMovies(int page) {
-    return Optional.ofNullable(this.moviesRestClient.findMovies(page))
+  public Optional<MoviesPaged> getMoviesByPage(int page) {
+    return Optional.ofNullable(this.moviesRestClient.findMoviesByPage(page))
         .map(MovieMapper::toMoviesPaged);
   }
 }

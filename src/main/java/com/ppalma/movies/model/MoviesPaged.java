@@ -12,12 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MoviesPaged {
 
-  private Integer page;
-
-  private Integer perPage;
-
-  private Integer total;
-
   private Integer totalPages;
 
   private List<Movie> movies;

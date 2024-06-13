@@ -18,6 +18,7 @@
     <java.version>17</java.version>
     <springdoc-openapi.version>2.5.0</springdoc-openapi.version>
     <commons-collections4.version>4.5.0-M1</commons-collections4.version>
+    <mockwebserver.version>4.12.0</mockwebserver.version>
   </properties>
   <dependencies>
     <dependency>
@@ -52,6 +53,12 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>mockwebserver</artifactId>
+      <version>${mockwebserver.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -67,6 +74,54 @@
             </exclude>
           </excludes>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.22.0</version>
+        <executions>
+          <execution>
+            <id>pmd-check</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <rulesets>
+                <ruleset>/rulesets/java/braces.xml</ruleset>
+                <ruleset>/rulesets/java/naming.xml</ruleset>
+              </rulesets>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.12</version>
+        <configuration>
+          <excludes>
+            <exclude>com/ppalma/movies/config/**/*</exclude>
+            <exclude>com/ppalma/movies/model/**/*</exclude>
+            <exclude>com/ppalma/movies/entity/**/*</exclude>
+            <exclude>com/ppalma/movies/exception/**/*</exclude>
+            <exclude>com/ppalma/movies/MoviesApplication.class</exclude>
+          </excludes>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>generate-code-coverage-report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

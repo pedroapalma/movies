@@ -1,9 +1,8 @@
 package com.ppalma.movies.controller;
 
-import com.ppalma.movies.model.Movie;
 import com.ppalma.movies.service.MoviesServices;
+import jakarta.validation.Valid;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,14 +17,8 @@ public class MoviesController {
   private final MoviesServices moviesServices;
 
   @GetMapping("/directors")
-  public List<String> getDirectors(
-      @RequestParam(name = "threshold", required = false) Integer threshold) {
+  public List<String> getDirectors(@Valid @RequestParam(name = "threshold") Integer threshold) {
     return this.moviesServices.getDirectors(threshold);
   }
 
-  @GetMapping("/movies")
-  public List<Movie> getMovies()
-      throws ExecutionException, InterruptedException {
-    return this.moviesServices.getAllMovies();
-  }
 }

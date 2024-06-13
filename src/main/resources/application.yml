@@ -4,8 +4,8 @@ spring:
 
 rest:
   movies:
-    url-base: https://directa24-movies.wiremockapi.cloud/api
-    uri: /movies/search
+    url-base: https://directa24-movies.wiremockapi.cloud
+    uri: /api/movies/search
 
 logging:
   level:

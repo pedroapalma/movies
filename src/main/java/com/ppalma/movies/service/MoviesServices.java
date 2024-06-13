@@ -24,18 +24,18 @@ public class MoviesServices {
   public List<String> getDirectors(int threshold) {
     List<Movie> movies = this.getAllMovies();
 
-    Map<String, Long> directorsCountMap = movies.stream()
+    Map<String, Long> directorMoviesCountMap = movies.stream()
         .collect(Collectors.groupingBy(Movie::getDirector, Collectors.counting()));
 
-    return directorsCountMap.entrySet().stream()
+    return directorMoviesCountMap.entrySet().stream()
         .filter(entry -> entry.getValue() > threshold)
         .map(Map.Entry::getKey)
         .sorted()
         .collect(Collectors.toList());
   }
 
-  public List<Movie> getAllMovies() {
-    MoviesPaged firstPageMovies = this.moviesRepository.getPagedMovies(1)
+  private List<Movie> getAllMovies() {
+    MoviesPaged firstPageMovies = this.moviesRepository.getMoviesByPage(1)
         .orElseThrow(() -> new NotFoundException("The movies does not exist"));
 
     List<Movie> remainingMovies = this.getMoviesFromRemainingPages(firstPageMovies.getTotalPages());
@@ -57,21 +57,29 @@ public class MoviesServices {
 
     List<Movie> movies;
     try {
-      movies = allOf.thenApply(v -> futures.stream()
-              .map(CompletableFuture::join)
-              .map(MoviesPaged::getMovies)
-              .flatMap(List::stream)
-              .toList())
-          .get();
+      movies = this.joinMoviesFromPages(allOf, futures);
     } catch (InterruptedException | ExecutionException e) {
       throw new InternalServerException("Error getting movies");
     }
+
     return movies;
   }
 
-  private CompletableFuture<MoviesPaged> getAsyncPagedMoviesFuture(int finalPage) {
+  private CompletableFuture<MoviesPaged> getAsyncPagedMoviesFuture(int page) {
     return CompletableFuture.supplyAsync(
-        () -> this.moviesRepository.getPagedMovies(finalPage).orElseThrow());
+        () -> this.moviesRepository.getMoviesByPage(page)
+            .orElseThrow(() -> new InternalServerException("Error getting remaining pages")));
+  }
+
+  private List<Movie> joinMoviesFromPages(CompletableFuture<Void> allOf,
+      List<CompletableFuture<MoviesPaged>> futures)
+      throws InterruptedException, ExecutionException {
+    return allOf.thenApply(v -> futures.stream()
+            .map(CompletableFuture::join)
+            .map(MoviesPaged::getMovies)
+            .flatMap(List::stream)
+            .toList())
+        .get();
   }
 
 }
