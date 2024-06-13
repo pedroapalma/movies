@@ -55,7 +55,7 @@ Each movie record has the following schema:
 
 http://localhost:8080/swagger-ui/index.html
 
-## Examples
+## Example
 
 ### Request
 
