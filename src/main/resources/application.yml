@@ -1,6 +1,9 @@
 spring:
   application:
     name: movies
+  redis:
+    host: localhost
+    port: 6379
 
 rest:
   movies:
@@ -10,6 +13,3 @@ rest:
 logging:
   level:
     org.apache.hc.client5.http: DEBUG
-    root: INFO
-    "[org.springframework.web]": DEBUG
-    "[com.ppalma.movies]": DEBUG

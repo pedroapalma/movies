@@ -30,6 +30,8 @@ Each movie record has the following schema:
 
 - Java
 - Spring Boot
+- Redis
+- Docker
 
 # Getting Started
 
@@ -37,9 +39,11 @@ Each movie record has the following schema:
 
 - Java
 - Maven
+- Docker
 
 ## Installing
 
+- Deploy redis container using `docker-compose up -d` with de the file [docker-compose.yml](src/main/resources/docker/docker-compose.yml)
 - Clone the repository.
 - Build the project using Maven: `mvn clean package`
 - Run the application: `java -jar target/movies-0.0.1-SNAPSHOT.jar`

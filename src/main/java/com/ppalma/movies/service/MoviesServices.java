@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,6 +22,7 @@ public class MoviesServices {
 
   private final MoviesRepository moviesRepository;
 
+  @Cacheable(value = "getDirectors", key = "#threshold")
   public List<String> getDirectors(int threshold) {
     List<Movie> movies = this.getAllMovies();
 
